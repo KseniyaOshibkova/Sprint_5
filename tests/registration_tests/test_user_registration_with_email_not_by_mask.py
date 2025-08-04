@@ -1,14 +1,15 @@
 from data.data_for_all_tests import DataForAllTests
 
 
-def test_registering_existing_user(driver, locators):
+
+def test_user_registration_with_email_not_by_mask(driver, locators):
     # Открыть форму регистрации и кликнуть "Нет аккаунта"
     locators.click_element(locators.login_and_registration_button)
     locators.click_element(locators.no_account_button)
-    # Заполнить поля Email и Password уже зарегистрированными данными
+    # Заполнить поля Email и Password не по маске
     locators.fill_input(
         locator=locators.email_input,
-        value=DataForAllTests.REPEAT_LOGIN.value)
+        value=DataForAllTests.NO_MASK_LOGIN.value)
     locators.fill_inputs([
         (locators.password_input, DataForAllTests.PASSWORD.value),
         (locators.repeat_password_input, DataForAllTests.PASSWORD.value)])

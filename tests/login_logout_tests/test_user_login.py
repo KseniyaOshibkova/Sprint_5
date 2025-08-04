@@ -1,17 +1,16 @@
 from data.data_for_all_tests import DataForAllTests
 
 
-def test_user_registration(driver, locators):
-    # Открыть форму регистрации и кликнуть "Нет аккаунта"
+
+def test_user_login(driver, locators):
+    # Открыть форму регистрации
     locators.click_element(locators.login_and_registration_button)
-    locators.click_element(locators.no_account_button)
-    # Заполнить поля Email, Пароль и Повторите пароль
-    locators.fill_generate_email()
+    # Заполнить поля Email и Password
     locators.fill_inputs([
-        (locators.password_input, DataForAllTests.PASSWORD.value),
-        (locators.repeat_password_input, DataForAllTests.PASSWORD.value)])
-    # Кликнуть по кнопке "Создать аккаунт"
-    locators.click_element(locators.create_account_button)
+        (locators.email_input, DataForAllTests.REPEAT_LOGIN.value),
+        (locators.password_input, DataForAllTests.PASSWORD.value)])
+    # Кликнуть по кнопке "Войти"
+    locators.click_element(locators.login_button)
 
     # Проверить отображение аватара авторизованного пользователя
     locators.check_displayed_element(locators.authorized_user_avatar)

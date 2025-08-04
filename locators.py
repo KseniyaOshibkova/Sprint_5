@@ -21,6 +21,8 @@ class Locators:
         self.authorized_user_avatar = (By.CSS_SELECTOR, "svg.svgSmall")
         self.authorized_user_name = (By.XPATH, "//h3[@class='profileText name']")
         self.registration_error = (By.XPATH, "//span[@class='input_span__yWPqB' and text()='Ошибка']")
+        self.login_button = (By.XPATH, "//button[contains(@class, 'button') and .='Войти']")
+        self.logout_button = (By.XPATH, "//button[text()='Выйти']")
 
     @staticmethod
     def generate_email():
@@ -41,27 +43,29 @@ class Locators:
         self.driver.find_element(*locator).send_keys(value)
 
     def fill_inputs(self, locators_and_values):
-        """Заполняет несколько полей ввода"""
+        """Заполняет поля ввода переданные в списке"""
         for locator, value in locators_and_values:
             element = self.driver.find_element(*locator)
             element.clear()
             element.send_keys(value)
 
-    def fill_password_fields(self, password, repeat_password):
-        """Заполняет поля паролей"""
-        self.fill_input(self.password_input, password)
-        self.fill_input(self.repeat_password_input, repeat_password)
-
     def check_current_url_under_authorized_user(self):
-        """Проверяет переход на главную страницу, отображение аватара и имени пользователя"""
+        """Проверяет переход на главную страницу"""
         assert self.driver.current_url == Url.HOST.value
 
     def check_displayed_element(self, locator):
+        """Проверяет отображение элемента"""
         element = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(locator))
         assert element.is_displayed()
 
+    def check_not_displayed_element(self, locator):
+        element = WebDriverWait(self.driver, 10).until(
+            EC.invisibility_of_element_located(locator))
+        assert element
+
     def check_text(self, locator, value):
+        """Проверяет соответствие полученного текста из элемента с константой"""
         actual = self.driver.find_element(*locator).text
         assert actual == value.value
 
