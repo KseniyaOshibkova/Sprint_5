@@ -5,4 +5,4 @@ class DataForAllTests(Enum):
     PASSWORD = '123456789'
     REPEAT_LOGIN = 'repeat@mail.com'
     USER = 'User.'
-    RED_COLOR = '#FF6972'
+    RED_COLOR = 'FF6972'

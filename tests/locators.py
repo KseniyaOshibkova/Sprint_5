@@ -14,7 +14,7 @@ class Locators:
 
         self.login_and_registration_button = (By.XPATH, "//button[contains(text(), 'Вход и регистрация')]")
         self.no_account_button = (By.XPATH, "//button[contains(text(), 'Нет аккаунта')]")
-        self.email_input = (By.CSS_SELECTOR, "input[name='email'].input_inputStandart__JweLZ")
+        self.email_input = (By.CSS_SELECTOR, "input.input_inputStandart__JweLZ[name='email']")
         self.password_input = (By.CSS_SELECTOR, "input[name='password'].input_inputStandart__JweLZ")
         self.repeat_password_input = (By.CSS_SELECTOR, "input[name='submitPassword'].input_inputStandart__JweLZ")
         self.create_account_button = (By.XPATH, "//button[text()='Создать аккаунт']")
@@ -68,7 +68,14 @@ class Locators:
 
     def fields_highlighted_red(self, field_locators, expected_hex_color):
         """Проверяет, что все указанные поля имеют заданный цвет рамки"""
+        # Конвертируем HEX в RGB
+        expected_rgb = (f"rgb({int(expected_hex_color[0:2], 16)}, {int(expected_hex_color[2:4], 16)}, "
+                        f"{int(expected_hex_color[4:6], 16)})")
+        # Проверяем, что у всех переданных элементов цвет совпадает с ожидаемым
         for locator in field_locators:
             element = self.driver.find_element(*locator)
-            border_value = element.value_of_css_property("border")
-            assert expected_hex_color.lower() in border_value.lower()
+            # Получаем родительский div
+            parent = element.find_element(By.XPATH, "./..")
+            actual_color = parent.value_of_css_property("border-color")
+            # Сравниваем заданный цвет с полученным
+            assert expected_rgb == actual_color

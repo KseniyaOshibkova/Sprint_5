@@ -19,8 +19,7 @@ def test_registering_existing_user(driver, locators):
 
     # Проверка отображения текста "Ошибка"
     locators.check_displayed_element(locators.regisration_error)
-    time.sleep(2)
-    # Проверка поля Email, «Пароль», «Повторите пароль» выделены красным
+    # Проверка поля Email, Пароль и Повторите пароль выделены красным
     locators.fields_highlighted_red(
         [locators.email_input,
          locators.password_input,
