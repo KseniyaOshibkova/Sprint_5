@@ -21,7 +21,7 @@ class Locators:
         self.post_advertisement_button = (By.XPATH, "//button[text()='Разместить объявление']")
         self.authorized_user_avatar = (By.CSS_SELECTOR, "svg.svgSmall")
         self.authorized_user_name = (By.XPATH, "//h3[@class='profileText name']")
-        self.regisration_error = (By.XPATH, "//span[@class='input_span__yWPqB' and text()='Ошибка']")
+        self.registration_error = (By.XPATH, "//span[@class='input_span__yWPqB' and text()='Ошибка']")
 
     @staticmethod
     def generate_email():

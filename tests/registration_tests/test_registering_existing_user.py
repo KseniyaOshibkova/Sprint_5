@@ -18,7 +18,7 @@ def test_registering_existing_user(driver, locators):
     locators.click_element(locators.create_account_button)
 
     # Проверка отображения текста "Ошибка"
-    locators.check_displayed_element(locators.regisration_error)
+    locators.check_displayed_element(locators.registration_error)
     # Проверка поля Email, Пароль и Повторите пароль выделены красным
     locators.fields_highlighted_red(
         [locators.email_input,
