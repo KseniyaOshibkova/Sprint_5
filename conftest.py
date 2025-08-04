@@ -2,7 +2,7 @@ import pytest
 from selenium import webdriver
 
 from url import Url
-from tests.locators import Locators
+from locators import Locators
 
 
 @pytest.fixture
