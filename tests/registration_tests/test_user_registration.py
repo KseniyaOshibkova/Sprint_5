@@ -1,7 +1,7 @@
 from data.data_for_all_tests import DataForAllTests
 
 
-def test_user_registration(driver, locators):
+def test_user_registration(locators):
     # Открыть форму регистрации и кликнуть "Нет аккаунта"
     locators.click_element(locators.login_and_registration_button)
     locators.click_element(locators.no_account_button)

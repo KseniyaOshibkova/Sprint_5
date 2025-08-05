@@ -8,3 +8,9 @@ class DataForAllTests(Enum):
     NO_MASK_LOGIN = 'no_mask.com'
     USER = 'User.'
     RED_COLOR = 'FF6972'
+    AUTHORIZE_WINDOW_TITLE = 'Чтобы разместить объявление, авторизуйтесь'
+    AD_TITLE = 'test_ad_under_user'
+    PRODUCT_DESCRIPTION = 'test product description'
+    PRODUCT_PRICE = 500
+    SPB_CITIE = 'Санкт-Петербург'
+    BOOKS_CATEGORY = 'Книги'

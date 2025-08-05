@@ -2,7 +2,7 @@ from data.data_for_all_tests import DataForAllTests
 
 
 
-def test_user_login(driver, locators):
+def test_user_login(locators):
     # Открыть форму регистрации
     locators.click_element(locators.login_and_registration_button)
     # Заполнить поля Email и Password
