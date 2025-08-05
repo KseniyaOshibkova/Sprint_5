@@ -22,7 +22,7 @@ class Locators:
         self.authorized_user_name = (By.XPATH, "//h3[@class='profileText name']")
         self.registration_error = (By.XPATH, "//span[@class='input_span__yWPqB' and text()='Ошибка']")
         self.login_button = (By.XPATH, "//button[contains(@class, 'button') and .='Войти']")
-        self.logout_button = (By.XPATH, "//button[text()='Выйти']")
+        self.logout_button = (By.XPATH, "//button[contains(text(), 'Выйти')]")
 
     @staticmethod
     def generate_email():
@@ -35,7 +35,9 @@ class Locators:
 
     def click_element(self, locator):
         """Кликает по элементу"""
-        self.driver.find_element(*locator).click()
+        element = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(locator))
+        element.click()
 
     def fill_input(self, locator, value):
         """Заполняет поле ввода"""
