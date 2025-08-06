@@ -1,22 +1,24 @@
 from data.data_for_all_tests import DataForAllTests
+from locators.locators import Locators
 
 
-def test_user_registration(locators):
+
+def test_user_registration(driver, login_page, profile_page):
     # Открыть форму регистрации и кликнуть "Нет аккаунта"
-    locators.click_element(locators.login_and_registration_button)
-    locators.click_element(locators.no_account_button)
-    # Заполнить поля Email, Пароль и Повторите пароль
-    locators.fill_generate_email()
-    locators.fill_inputs([
-        (locators.password_input, DataForAllTests.PASSWORD.value),
-        (locators.repeat_password_input, DataForAllTests.PASSWORD.value)])
+    login_page.click_element(Locators.LOGIN_AND_REGISTRATION_BUTTON)
+    login_page.click_element(Locators.NO_ACCOUNT_BUTTON)
+    # Заполнить поля Email и Password уже зарегистрированными данными
+    login_page.fill_generate_email()
+    login_page.fill_inputs([
+        (Locators.PASSWORD_INPUT, DataForAllTests.PASSWORD.value),
+        (Locators.REPEAT_PASSWORD_INPUT, DataForAllTests.PASSWORD.value)])
     # Кликнуть по кнопке "Создать аккаунт"
-    locators.click_element(locators.create_account_button)
+    login_page.click_element(Locators.CREATE_ACCOUNT_BUTTON)
 
     # Проверить отображение аватара авторизованного пользователя
-    locators.check_displayed_element(locators.authorized_user_avatar)
+    profile_page.check_displayed_element(Locators.AUTHORIZED_USER_AVATAR)
     # Проверить имя авторизованного пользователя
-    locators.check_text(
-        locators.authorized_user_name, DataForAllTests.USER)
+    profile_page.check_text(
+        Locators.AUTHORIZED_USER_NAME, DataForAllTests.USER)
     # Проверить текущий url
-    locators.check_current_url_under_authorized_user()
+    profile_page.check_current_url_under_authorized_user()
