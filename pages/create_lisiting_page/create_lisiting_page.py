@@ -1,8 +1,5 @@
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
-from data.url import Url
 from locators.locators import Locators
 from pages.base_page.base_page import BasePage
 
