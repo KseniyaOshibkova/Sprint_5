@@ -17,7 +17,7 @@ class Locators:
         self.password_input = (By.CSS_SELECTOR, "input[name='password'].input_inputStandart__JweLZ")
         self.repeat_password_input = (By.CSS_SELECTOR, "input[name='submitPassword'].input_inputStandart__JweLZ")
         self.create_account_button = (By.XPATH, "//button[text()='Создать аккаунт']")
-        self.authorized_user_avatar = (By.CSS_SELECTOR, "svg.svgSmall")
+        self.authorized_user_avatar = (By.XPATH, "//button[contains(@class, 'circleSmall')]")
         self.authorized_user_name = (By.XPATH, "//h3[@class='profileText name']")
         self.registration_error = (By.XPATH, "//span[@class='input_span__yWPqB' and text()='Ошибка']")
         self.login_button = (By.XPATH, "//button[contains(@class, 'button') and .='Войти']")
@@ -26,7 +26,7 @@ class Locators:
         self.post_advertisement_button = (By.XPATH, "//button[contains(@class, 'buttonPrimary') and normalize-space()="
                                                     "'Разместить объявление']")
         self.title_ad_input = (By.CSS_SELECTOR, "input[name='name']")
-        self.product_description_nput = (By.XPATH, "//textarea[@name='description']")
+        self.product_description_input = (By.XPATH, "//textarea[@name='description']")
         self.product_price_input = (By.XPATH, "//input[@name='price']")
         self.drop_down_list_cities = (By.CSS_SELECTOR, "input[name='city'][readonly]")
         self.drop_down_product_category= (By.CSS_SELECTOR, "div.dropDownMenu_input__itKtw")
@@ -34,8 +34,8 @@ class Locators:
                                                "'radioUnput_inputRegular__FbVbr')]")
         self.publish_ad_button = (By.XPATH, "//button[contains(@class, 'buttonPrimary') and normalize-space()="
                                             "'Опубликовать']")
-        self.select_dropdown_cities_button = (By.XPATH, "//input[@name='city']/following-sibling::button[contains(@class, "
-                                                 "'dropDownMenu_arrow')]")
+        self.select_dropdown_cities_button = (By.XPATH, "//input[@name='city']/following-sibling::button[contains"
+                                                        "(@class, ""'dropDownMenu_arrow')]")
         self.select_dropdown_category_button = (By.CSS_SELECTOR, "div.dropDownMenu_input__itKtw > "
                                                                  "button.dropDownMenu_arrowDown__pfGL1")
 
@@ -51,8 +51,10 @@ class Locators:
 
     def click_element(self, locator):
         """Кликает по элементу"""
-        element = WebDriverWait(self.driver, 10).until(
+        element = WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located(locator))
+        WebDriverWait(self.driver, 15).until(
+            EC.element_to_be_clickable(locator))
         element.click()
 
     def fill_input(self, locator, value):
@@ -125,3 +127,21 @@ class Locators:
         f"//div[@class='dropDownMenu_options__CmHmm']"  # контейнер списка
         f"//button[.//span[normalize-space()='{option_text}']]")  # кнопка с нужным текстом
         self.click_element(option_locator)
+
+    def verify_last_advertisement(self, expected_title):
+        # Дождаться загрузки страницы профиля
+        WebDriverWait(self.driver, 15).until(
+            EC.url_to_be(Url.PROFILE.value))
+        # Получить все объявления
+        all_ads = self.driver.find_elements(By.CSS_SELECTOR, "div.card")
+
+        # Проскролить к последнему объявлению
+        last_ad = all_ads[-1]
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", last_ad)
+
+        # Получить заголовок
+        title_element = last_ad.find_element(By.CLASS_NAME, "h2")
+        actual_title = title_element.text
+
+        # Проверить соответствие заголовков
+        assert actual_title == expected_title
