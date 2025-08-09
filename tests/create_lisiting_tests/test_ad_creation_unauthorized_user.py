@@ -1,12 +1,10 @@
-from locators.locators import Locators
 
 
 
-def test_ad_creation_unauthorized_user(driver,login_page):
+
+def test_ad_creation_unauthorized_user(driver, login_page, create_lisiting_page):
     # Нажать кнопку "Разместить объявление"
-    login_page.click_element(Locators.POST_ADVERTISEMENT_BUTTON)
+    create_lisiting_page.open_post_advertisement()
 
     # Проверить отображение заголовка в модальном окне
-    login_page.check_display_title_in_modal_window(
-        Locators.MODAL_WINDOW_AUTHORIZE,
-        Locators.PLS_LOGIN_TITLE)
+    login_page.check_display_title_in_modal_window_create()

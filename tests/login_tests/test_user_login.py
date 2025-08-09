@@ -1,21 +1,18 @@
-from data.data_for_all_tests import DataForAllTests
-from locators.locators import Locators
+from data.data_login import DataForLoginTests
+from data.url import Url
 
 
-def test_user_login(driver, login_page):
-    # Открыть форму регистрации
-    login_page.click_element(Locators.LOGIN_AND_REGISTRATION_BUTTON)
-    # Заполнить поля Email и Password
-    login_page.fill_inputs([
-        (Locators.EMAIL_INPUT, DataForAllTests.REPEAT_LOGIN.value),
-        (Locators.PASSWORD_INPUT, DataForAllTests.PASSWORD.value)])
-    # Кликнуть по кнопке "Войти"
-    login_page.click_element(Locators.LOGIN_BUTTON)
+def test_user_login(driver, login_page, profile_page):
+    # Авторизоваться
+    login_page.user_login(
+        email=DataForLoginTests.REPEAT_LOGIN.value,
+        password=DataForLoginTests.PASSWORD.value)
 
     # Проверить отображение аватара авторизованного пользователя
-    login_page.check_displayed_element(Locators.AUTHORIZED_USER_AVATAR)
+    profile_page.check_displayed_avatar()
     # Проверить имя авторизованного пользователя
-    login_page.check_text(
-        Locators.AUTHORIZED_USER_NAME, DataForAllTests.USER)
+    profile_page.check_name_authorized_user(
+        expected_text=DataForLoginTests.USER.value)
     # Проверить текущий url
-    login_page.check_current_url_under_authorized_user()
+    login_page.check_current_url_under_authorized_user(
+        url=Url.BASE_URL)
