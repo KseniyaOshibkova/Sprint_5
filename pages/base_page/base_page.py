@@ -34,17 +34,11 @@ class BasePage:
         """Скролит до элемиента"""
         self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
 
-    def click_element(self, locator, timeout=5, retries=3):
+    def click_element(self, locator, timeout=10):
         """Кликает по элементу"""
-        for attempt in range(retries):
-            try:
-                element = WebDriverWait(self.driver, timeout).until(
-                    EC.element_to_be_clickable(locator))
-                element.click()
-                return
-            except StaleElementReferenceException:
-                if attempt == retries - 1:
-                    raise
+        element = WebDriverWait(self.driver, timeout).until(
+                  EC.element_to_be_clickable(locator))
+        element.click()
 
     def fill_input(self, locator, value):
         """Заполняет поле ввода"""
